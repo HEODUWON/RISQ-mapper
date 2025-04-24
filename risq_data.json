@@ -10,5 +10,23 @@
     "DESCRIPTION": "Has a safety officer been appointed and trained, and is the safety officer familiar with the principles and practice of risk assessment?",
     "Guide": "A safety officer must be appointed in accordance with STCW and company policy. Training and familiarity with risk assessment must be documented.",
     "Action": "- SSO 임명장\n- 위험성 평가 교육 이수증"
+  },
+  {
+    "NO": "4.3",
+    "DESCRIPTION": "Are the latest shipboard internal and external audits, as well as S.I inspection reports, available and corrective actions taken in response to non-conformances?",
+    "Guide": "Audit reports and evidence of corrective actions should be available. Records of internal audit schedules and follow-up should be maintained.",
+    "Action": "내부 감사 일정표\n- 시정조치 보고서"
+  },
+  {
+    "NO": "4.4",
+    "DESCRIPTION": "Has the Master reviewed the Safety Management System and reported its effectiveness to the Company?",
+    "Guide": "Master’s review reports must be documented. Recommendations and feedback to the Company should be clearly recorded and traceable.",
+    "Action": "선장의 ISM 검토보고서\n- 회신 내용"
+  },
+  {
+    "NO": "4.5",
+    "DESCRIPTION": "Are entry into enclosed spaces controlled under a documented procedure, and are the crew trained and aware of the associated risks?",
+    "Guide": "Enclosed space entry should follow a documented procedure with pre-entry checklist. Training records and awareness assessments must be maintained.",
+    "Action": "밀폐구역 진입절차서\n- 교육 이수 확인서"
   }
 ]
