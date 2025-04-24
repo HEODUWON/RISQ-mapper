@@ -1,0 +1,14 @@
+[
+  {
+    "NO": "4.1",
+    "DESCRIPTION": "Has the vessel’s manager established a documented system for personnel to effectively implement the ISM Code?",
+    "Guide": "The vessel’s manager should maintain a documented system to effectively implement the ISM Code, including visit records, rank, and purpose.",
+    "Action": "- 회사매뉴얼 제시\n- Document Master List 제공\n- Provide SMS manual"
+  },
+  {
+    "NO": "4.2",
+    "DESCRIPTION": "Has a safety officer been appointed and trained, and is the safety officer familiar with the principles and practice of risk assessment?",
+    "Guide": "A safety officer must be appointed in accordance with STCW and company policy. Training and familiarity with risk assessment must be documented.",
+    "Action": "- SSO 임명장\n- 위험성 평가 교육 이수증"
+  }
+]
