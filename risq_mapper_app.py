@@ -1,4 +1,3 @@
-
 import streamlit as st
 import json
 import re
@@ -14,14 +13,16 @@ with open("risq_data.json", "r", encoding="utf-8") as f:
     dummy_data = {}
     for item in raw_data:
         no = item.get("NO", "").strip()
-        question = item.get("DESCRIPTION", "").strip()
+        question = item.get("Description", "").strip()
         guide = item.get("Guide", "").strip()
-        docs = [line.strip() for line in item.get("Action", "").split("\n") if line.strip()]
+        action_e = item.get("action(E)", "").strip()
+        action_k = item.get("action(K)", "").strip()
         if no:
             dummy_data[no] = {
                 "question": question,
                 "guide": guide,
-                "docs": docs
+                "action_e": action_e,
+                "action_k": action_k
             }
 
 with tab1:
@@ -30,7 +31,8 @@ with tab1:
         st.success(f"[RISQ {risq_no}] 매핑 결과")
         st.markdown(f"**🟦 Question**\n\n{dummy_data[risq_no]['question']}")
         st.markdown(f"**📋 Guide 요약**\n\n{dummy_data[risq_no]['guide']}")
-        st.markdown(f"**📁 관련 회사 문서**\n\n- " + '\n- '.join(dummy_data[risq_no]['docs']))
+        st.markdown(f"**📁 Action (E)**\n\n{dummy_data[risq_no]['action_e']}")
+        st.markdown(f"**📁 Action (K)**\n\n{dummy_data[risq_no]['action_k']}")
     elif risq_no:
         st.warning("해당 RISQ 번호에 대한 데이터가 없습니다.")
 
@@ -40,14 +42,18 @@ with tab2:
         matches = []
         for risq_no, content in dummy_data.items():
             question_text = content.get("question", "")
-            docs_text = ' '.join(content.get("docs", []))
+            action_e_text = content.get("action_e", "")
+            action_k_text = content.get("action_k", "")
 
             if full_keyword.lower() in question_text.lower():
                 highlighted = re.sub(f"({re.escape(full_keyword)})", r"**:red[\1]**", question_text, flags=re.IGNORECASE)
                 matches.append((risq_no, "DESCRIPTION", highlighted))
-            elif full_keyword.lower() in docs_text.lower():
-                highlighted_docs = [re.sub(f"({re.escape(full_keyword)})", r"**:red[\1]**", d, flags=re.IGNORECASE) for d in content.get("docs", [])]
-                matches.append((risq_no, "Action", '\n- ' + '\n- '.join(highlighted_docs)))
+            elif full_keyword.lower() in action_e_text.lower():
+                highlighted = re.sub(f"({re.escape(full_keyword)})", r"**:red[\1]**", action_e_text, flags=re.IGNORECASE)
+                matches.append((risq_no, "Action (E)", highlighted))
+            elif full_keyword.lower() in action_k_text.lower():
+                highlighted = re.sub(f"({re.escape(full_keyword)})", r"**:red[\1]**", action_k_text, flags=re.IGNORECASE)
+                matches.append((risq_no, "Action (K)", highlighted))
 
         if matches:
             for risq_no, section, highlighted_content in matches:
