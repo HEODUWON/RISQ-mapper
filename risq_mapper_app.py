@@ -2,11 +2,11 @@ import streamlit as st
 import json
 import re
 
-st.set_page_config(page_title="RISQ 자동 매핑기", layout="centered")
-st.title("🧭 RISQ 자동 매핑기 (Nori Edition)")
+st.set_page_config(page_title="RightShip RISQ 3.1", layout="centered")
+st.title("🧭 RightShip RISQ 3.1 (Test Edition)")
 
 # 입력 방식 선택
-tab1, tab2 = st.tabs(["🔢 RISQ 번호 검색", "🧠 전체 내용 기반 검색"])
+tab1, tab2 = st.tabs(["🔢 Let's find RISQ No.", "🧠 Searh by Key Word"])
 
 with open("risq_data.json", "r", encoding="utf-8") as f:
     raw_data = json.load(f)
@@ -30,14 +30,14 @@ with tab1:
     if risq_no in dummy_data:
         st.success(f"[RISQ {risq_no}] 매핑 결과")
         st.markdown(f"**🟦 Question**\n\n{dummy_data[risq_no]['question']}")
-        st.markdown(f"**📋 Guide 요약**\n\n{dummy_data[risq_no]['guide']}")
+        st.markdown(f"**📋 Guide summary**\n\n{dummy_data[risq_no]['guide']}")
         st.markdown(f"**📁 Action (E)**\n\n{dummy_data[risq_no]['action_e']}")
         st.markdown(f"**📁 Action (K)**\n\n{dummy_data[risq_no]['action_k']}")
     elif risq_no:
-        st.warning("해당 RISQ 번호에 대한 데이터가 없습니다.")
+        st.warning("Can not found data for RISQ No.")
 
 with tab2:
-    full_keyword = st.text_input("내용 기반 키워드 검색 (예: safety officer, enclosed space 등)")
+    full_keyword = st.text_input("Search by key workd (ex: safety officer, enclosed space etc.,)")
     if full_keyword:
         matches = []
         for risq_no, content in dummy_data.items():
@@ -58,6 +58,33 @@ with tab2:
         if matches:
             for risq_no, section, highlighted_content in matches:
                 st.markdown(f"### RISQ {risq_no}")
-                st.markdown(f"**🔍 매칭된 항목 ({section})**\n\n{highlighted_content}")
+                st.markdown(f"**🔍 matched item ({section})**\n\n{highlighted_content}")
         else:
-            st.info("일치하는 항목이 없습니다.")
+            st.info("No founded")
+with st.expander("📣 Send us your feedback"):
+    st.markdown("### 💬 User Feedback")
+    st.markdown(
+        """
+        We'd love to hear your thoughts!  
+        If you have any suggestions, bug reports, or ideas to improve this app,  
+        please leave your feedback below. Your input will help us improve. 🛠️
+        """
+    )
+
+    feedback = st.text_area("✍️ Write your feedback here", height=150)
+
+    if st.button("📩 Submit Feedback"):
+        if feedback.strip():
+            with open("feedback_log.txt", "a", encoding="utf-8") as f:
+                f.write(feedback.strip() + "\n---\n")
+            st.success("✅ Thank you! Your feedback has been saved.")
+        else:
+            st.warning("⚠️ Please enter some feedback before submitting.")
+
+    if st.checkbox("📂 View Submitted Feedback"):
+        try:
+            with open("feedback_log.txt", "r", encoding="utf-8") as f:
+                logs = f.read()
+            st.text_area("📋 Feedback Log", value=logs, height=300)
+        except FileNotFoundError:
+            st.info("No feedback has been submitted yet.")
