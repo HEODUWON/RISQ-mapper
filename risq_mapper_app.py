@@ -29,7 +29,13 @@ with tab1:
     risq_no = st.text_input("RISQ 번호 입력 (예: 4.16)")
     if risq_no in dummy_data:
         st.success(f"[RISQ {risq_no}] 매핑 결과")
-        st.markdown(f"**🟦 Question**\n\n{dummy_data[risq_no]['question']}")
+        question_text = dummy_data[risq_no]['question']
+        desc_parts = question_text.split('\n')
+        english_desc = desc_parts[0].strip()
+        korean_desc = desc_parts[1].strip() if len(desc_parts) > 1 else ""
+
+        st.markdown(f"**🗾 Question (English)**\n\n{english_desc}")
+        st.markdown(f"**🗾 Question (Korean)**\n\n{korean_desc}")
         st.markdown(f"**📋 Guide summary**\n\n{dummy_data[risq_no]['guide']}")
         st.markdown(f"**📁 Action (E)**\n\n{dummy_data[risq_no]['action_e']}")
         st.markdown(f"**📁 Action (K)**\n\n{dummy_data[risq_no]['action_k']}")
