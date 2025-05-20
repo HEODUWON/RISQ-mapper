@@ -6,7 +6,6 @@ import requests
 
 GITHUB_OWNER = "HEODUWON"        
 GITHUB_REPO = "RISQ-mapper"       
-GITHUB_PATH = f"SOLUTION DATA/{risq_no}"  
 
 st.set_page_config(page_title="RightShip RISQ 3.1", layout="centered")
 st.title("RightShip RISQ 3.1 (Test Edition)")
@@ -51,6 +50,7 @@ with tab1:
     risq_no = st.text_input("RISQ 번호 입력 (예: 4.16)")
     if risq_no:
         if risq_no in dummy_data:
+            GITHUB_PATH = f"SOLUTION DATA/{risq_no}"  
             st.success(f"[RISQ {risq_no}] 매핑 결과")
 
             question_text = dummy_data[risq_no]['question']
