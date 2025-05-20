@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import re
 import os
-import request
+import requests
 
 st.set_page_config(page_title="RightShip RISQ 3.1", layout="centered")
 st.title("RightShip RISQ 3.1 (Test Edition)")
