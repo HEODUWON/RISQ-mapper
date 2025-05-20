@@ -46,8 +46,22 @@ def highlight_korean_lines(text):
             styled_lines.append(line)
     return '<br>'.join(styled_lines)
 
+def get_github_files(path, token=None):
+    url = f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{path}"
+    headers = {}
+    if token:
+        headers['Authorization'] = f'token {token}'
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error(f"GitHub API 호출 실패: {response.status_code}")
+        return []  
+
 with tab1:
     risq_no = st.text_input("RISQ 번호 입력 (예: 4.16)")
+    token = st.text_input("GitHub Personal Access Token (Optional)", type="password")
+   
     if risq_no:
         if risq_no in dummy_data:
             GITHUB_PATH = f"SOLUTION DATA/{risq_no}"  
