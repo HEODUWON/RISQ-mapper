@@ -98,7 +98,7 @@ with tab1:
                                 file_name=file_name,
                                 mime=mime_type
                             )     
-           except Exception as e:
+               except Exception as e:
                  st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
         st.write("")
     else:
