@@ -16,19 +16,19 @@ with open("risq_data.json", "r", encoding="utf-8") as f:
 base_path = "SOLUTION DATA"
 
 dummy_data = {}
-    for item in raw_data:
-        no = item.get("NO", "").strip()
-        question = item.get("Description", "").strip()
-        guide = item.get("Guide", "").strip()
-        action_e = item.get("action(E)", "").strip()
-        action_k = item.get("action(K)", "").strip()
-        if no:
-            dummy_data[no] = {
-                "question": question,
-                "guide": guide,
-                "action_e": action_e,
-                "action_k": action_k
-            }
+for item in raw_data:
+    no = item.get("NO", "").strip()
+    question = item.get("Description", "").strip()
+    guide = item.get("Guide", "").strip()
+    action_e = item.get("action(E)", "").strip()
+    action_k = item.get("action(K)", "").strip()
+    if no:
+        dummy_data[no] = {
+            "question": question,
+            "guide": guide,
+            "action_e": action_e,
+            "action_k": action_k
+        }
 
 def highlight_korean_lines(text):
     import re
