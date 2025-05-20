@@ -75,32 +75,33 @@ with tab1:
             st.markdown("**Relevant Documents:**")
 
             if os.path.exists(folder_path):
-                files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.pdf', '.docx', '.xlsx', '.jpg', '.jpeg', '.png'))]
-                if files:
-                    for file_name in files:
-                        file_path = os.path.join(folder_path, file_name)
-                        with open(file_path, "rb") as file_obj:
-                            file_bytes = file_obj.read()
-                            ext = file_name.lower().split('.')[-1]
-                            mime_types = {
-                                'pdf': 'application/pdf',
-                                'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                'jpg': 'image/jpeg',
-                                'jpeg': 'image/jpeg',
-                                'png': 'image/png'
-                            }
-                            mime_type = mime_types.get(ext, 'application/octet-stream')
+    files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.pdf', '.docx', '.xlsx', '.jpg', '.jpeg', '.png'))]
+    if files:
+        for file_name in files:
+            file_path = os.path.join(folder_path, file_name)
+            try:
+                with open(file_path, "rb") as file_obj:
+                    file_bytes = file_obj.read()
+                    ext = file_name.lower().split('.')[-1]
+                    mime_types = {
+                        'pdf': 'application/pdf',
+                        'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        'jpg': 'image/jpeg',
+                        'jpeg': 'image/jpeg',
+                        'png': 'image/png'
+                    }
+                    mime_type = mime_types.get(ext, 'application/octet-stream')
 
-                            st.download_button(
-                                label=f"Download {file_name}",
-                                data=file_bytes,
-                                file_name=file_name,
-                                mime=mime_type
-                            )     
-               except Exception as e:
-                 st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
-        st.write("")
+                    st.download_button(
+                        label=f"Download {file_name}",
+                        data=file_bytes,
+                        file_name=file_name,
+                        mime=mime_type
+                    )
+            except Exception as e:
+                st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
+        st.write("")  # 버튼 간 간격
     else:
         st.info("지원하는 파일이 없습니다.")
 else:
