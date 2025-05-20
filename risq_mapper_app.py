@@ -54,12 +54,12 @@ with tab1:
             st.success(f"[RISQ {risq_no}] 매핑 결과")
 
             question_text = dummy_data[risq_no]['question']
-            desc_parts = question_text.split('\n')
+            desc_parts = question_text.split('\\n')
             english_desc = desc_parts[0].strip()
             korean_desc = desc_parts[1].strip() if len(desc_parts) > 1 else ""
 
-            st.markdown(f"**Question (English)**\n\n{english_desc}")
-            st.markdown(f"**Question (Korean)**\n\n{korean_desc}")
+            st.markdown(f"**Question (English)**\\n\\n{english_desc}")
+            st.markdown(f"**Question (Korean)**\\n\\n{korean_desc}")
 
             guide_text = dummy_data[risq_no]['guide']
             pretty_guide = highlight_korean_lines(guide_text)
@@ -67,45 +67,47 @@ with tab1:
             scrollable_box = f"<div style='height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9'>{pretty_guide}</div>"
             st.markdown(scrollable_box, unsafe_allow_html=True)
 
-            st.markdown(f"**Action (E)**\n\n{dummy_data[risq_no]['action_e']}")
-            st.markdown(f"**Action (K)**\n\n{dummy_data[risq_no]['action_k']}")
+            st.markdown(f"**Action (E)**\\n\\n{dummy_data[risq_no]['action_e']}")
+            st.markdown(f"**Action (K)**\\n\\n{dummy_data[risq_no]['action_k']}")
 
-            base_path = r"C:\Users\user\Desktop\RISQ\SOLUTION DATA"
+            base_path = r"C:\\Users\\user\\Desktop\\RISQ\\SOLUTION DATA"
             folder_path = os.path.join(base_path, risq_no)
             st.markdown("**Relevant Documents:**")
 
             if os.path.exists(folder_path):
-    files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.pdf', '.docx', '.xlsx', '.jpg', '.jpeg', '.png'))]
-    if files:
-        for file_name in files:
-            file_path = os.path.join(folder_path, file_name)
-            try:
-                with open(file_path, "rb") as file_obj:
-                    file_bytes = file_obj.read()
-                    ext = file_name.lower().split('.')[-1]
-                    mime_types = {
-                        'pdf': 'application/pdf',
-                        'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                        'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                        'jpg': 'image/jpeg',
-                        'jpeg': 'image/jpeg',
-                        'png': 'image/png'
-                    }
-                    mime_type = mime_types.get(ext, 'application/octet-stream')
+                files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.pdf', '.docx', '.xlsx', '.jpg', '.jpeg', '.png'))]
+                if files:
+                    for file_name in files:
+                        file_path = os.path.join(folder_path, file_name)
+                        try:
+                            with open(file_path, "rb") as file_obj:
+                                file_bytes = file_obj.read()
+                                ext = file_name.lower().split('.')[-1]
+                                mime_types = {
+                                    'pdf': 'application/pdf',
+                                    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                    'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                    'jpg': 'image/jpeg',
+                                    'jpeg': 'image/jpeg',
+                                    'png': 'image/png'
+                                }
+                                mime_type = mime_types.get(ext, 'application/octet-stream')
 
-                    st.download_button(
-                        label=f"Download {file_name}",
-                        data=file_bytes,
-                        file_name=file_name,
-                        mime=mime_type
-                    )
-            except Exception as e:
-                st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
-        st.write("")  # 버튼 간 간격
-    else:
-        st.info("지원하는 파일이 없습니다.")
-else:
-    st.warning("해당 폴더가 존재하지 않습니다.")
+                                st.download_button(
+                                    label=f"Download {file_name}",
+                                    data=file_bytes,
+                                    file_name=file_name,
+                                    mime=mime_type
+                                )
+                        except Exception as e:
+                            st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
+                    st.write("")  # 간격
+                else:
+                    st.info("지원하는 파일이 없습니다.")
+            else:
+                st.warning("해당 폴더가 존재하지 않습니다.")
+        else:
+            st.warning("Cannot find data for RISQ No.")
 
 with tab2:
     full_keyword = st.text_input("Search by key word (ex: safety officer, enclosed space etc.,)")
