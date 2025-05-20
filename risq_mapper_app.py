@@ -97,13 +97,13 @@ with tab1:
                                 data=file_bytes,
                                 file_name=file_name,
                                 mime=mime_type
-                            )
-            st.write("")  
-         except Exception as e:
-             st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
-   else:
+                            )     
+           except Exception as e:
+                 st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
+        st.write("")
+    else:
         st.info("지원하는 파일이 없습니다.")
- else:
+else:
     st.warning("해당 폴더가 존재하지 않습니다.")
 
 with tab2:
