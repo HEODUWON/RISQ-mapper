@@ -15,7 +15,7 @@ with open("risq_data.json", "r", encoding="utf-8") as f:
 
 base_path = "SOLUTION DATA"
 
-    dummy_data = {}
+dummy_data = {}
     for item in raw_data:
         no = item.get("NO", "").strip()
         question = item.get("Description", "").strip()
