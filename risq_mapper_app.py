@@ -4,6 +4,10 @@ import re
 import os
 import requests
 
+GITHUB_OWNER = "HEODUWON"        
+GITHUB_REPO = "RISQ-mapper"       
+GITHUB_PATH = f"SOLUTION DATA/{risq_no}"  
+
 st.set_page_config(page_title="RightShip RISQ 3.1", layout="centered")
 st.title("RightShip RISQ 3.1 (Test Edition)")
 
@@ -77,7 +81,6 @@ with tab1:
                         file_path = os.path.join(folder_path, file_name)
                         with open(file_path, "rb") as file_obj:
                             file_bytes = file_obj.read()
-                            # MIME 타입 매핑
                             ext = file_name.lower().split('.')[-1]
                             mime_types = {
                                 'pdf': 'application/pdf',
@@ -86,7 +89,7 @@ with tab1:
                                 'jpg': 'image/jpeg',
                                 'jpeg': 'image/jpeg',
                                 'png': 'image/png'
-                                        }
+                            }
                             mime_type = mime_types.get(ext, 'application/octet-stream')
 
                             st.download_button(
@@ -94,8 +97,14 @@ with tab1:
                                 data=file_bytes,
                                 file_name=file_name,
                                 mime=mime_type
-                                            )
-            st.write("")  # 간격
+                            )
+            st.write("")  
+         except Exception as e:
+             st.error(f"파일 열기 실패: {file_name}, 오류: {e}")
+   else:
+        st.info("지원하는 파일이 없습니다.")
+ else:
+    st.warning("해당 폴더가 존재하지 않습니다.")
 
 with tab2:
     full_keyword = st.text_input("Search by key word (ex: safety officer, enclosed space etc.,)")
