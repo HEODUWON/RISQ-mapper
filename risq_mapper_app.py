@@ -308,7 +308,3 @@ if tab_option == "Keyword":
         else:
 
             st.info("No results found.")
-
-        ---
-        """
-    )
