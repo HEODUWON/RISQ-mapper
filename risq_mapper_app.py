@@ -121,7 +121,7 @@ def highlight_korean_lines(text):
 
         if re.search(r'[가-힣]', line):
 
-            styled_lines.append(f"<span style='color:#1E90FF'>{line}</span>")
+            styled_lines.append(f"<span style='color:#4A4A4A'>{line}</span>")
 
         else:
 
